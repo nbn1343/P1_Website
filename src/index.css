@@ -56,14 +56,6 @@
   font-size: 0.9rem;
 }
 
-.filter-group input{
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 100%;
-  float: left;
-}
-
 select, input {
   padding: 0.5rem;
   border: 1px solid #ddd;
