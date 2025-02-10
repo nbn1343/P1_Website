@@ -191,11 +191,11 @@ function App() {
   );
 
   const toggleFavorite = (courseId) => {
-    setFavorites(favs => {
-      if (favs.includes(courseId)) {
-        return favs.filter(id => id !== courseId);
+    setFavorites(currentFavorites => {
+      if (currentFavorites.includes(courseId)) {
+        return currentFavorites.filter(id => id !== courseId);
       } else {
-        return [...favs, courseId];
+        return [...currentFavorites, courseId];
       }
     });
   };
@@ -325,6 +325,12 @@ function App() {
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <button className="modal-close" onClick={closeModal}>×</button>
             <h2>{modalCourse.header}: {modalCourse.title}</h2>
+            <button
+                className={`favorite-button ${favorites.includes(modalCourse.id) ? 'favorited' : ''}`}
+                onClick={() => toggleFavorite(modalCourse.id)}
+              >
+                {favorites.includes(modalCourse.id) ? '★ Unfavorite' : '☆ Favorite'}
+            </button>
             <p className="modal-description">{modalCourse.description}</p>
             <div className="modal-details">
               <p><strong>Credits:</strong> {modalCourse.credits}</p>

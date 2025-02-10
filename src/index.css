@@ -223,5 +223,17 @@ select, input {
 }
 
 .favorited {
-  color: rgb(177, 156, 39);
+  color: gold;
+}
+
+.favorite-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: grey;
+}
+
+.favorite-button.favorited {
+  color: gold;
 }
