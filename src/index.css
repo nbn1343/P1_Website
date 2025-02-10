@@ -56,6 +56,11 @@
   font-size: 0.9rem;
 }
 
+.filter-group input[type="checkbox"] {
+  margin-left: 0; /* Ensures checkbox starts from the very left */
+  width: auto; /* Removes the width: 100% which could affect positioning */
+}
+
 select, input {
   padding: 0.5rem;
   border: 1px solid #ddd;
