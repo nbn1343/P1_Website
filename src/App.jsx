@@ -168,6 +168,10 @@ function App() {
   const [semester, setSemester] = useState('All Semesters');
   const coursesPerPage = 10;
 
+  const [favorites, setFavorites] = useState([]);
+
+  const [showFavorites, setShowFavorites] = useState(false);
+
   const filteredCourses = coursesData.filter(course => {
     const levelMatch = courseLevel === 'All Levels' || 
       Math.floor(parseInt(course.header.match(/\d+/)[0])/100)*100 === parseInt(courseLevel);
@@ -175,8 +179,9 @@ function App() {
     const semesterMatch = semester === 'All Semesters' || course.semesters.includes(semester);
     const searchMatch = course.header.toLowerCase().includes(searchTerm.toLowerCase()) ||
       course.title.toLowerCase().includes(searchTerm.toLowerCase());
-
-    return levelMatch && creditMatch && semesterMatch && searchMatch;
+    const favoritesMatch = !showFavorites || favorites.includes(course.id);
+  
+    return levelMatch && creditMatch && semesterMatch && searchMatch && favoritesMatch;
   });
 
   const totalPages = Math.ceil(filteredCourses.length / coursesPerPage);
@@ -184,6 +189,18 @@ function App() {
     (currentPage - 1) * coursesPerPage,
     currentPage * coursesPerPage
   );
+
+  const toggleFavorite = (courseId) => {
+    setFavorites(favs => {
+      if (favs.includes(courseId)) {
+        return favs.filter(id => id !== courseId);
+      } else {
+        return [...favs, courseId];
+      }
+    });
+  };
+
+
 
   const openModal = (course) => setModalCourse(course);
   const closeModal = () => setModalCourse(null);
@@ -246,6 +263,15 @@ function App() {
               <option value="SU">Summer</option>
             </select>
           </div>
+
+          <div className="filter-group">
+            <label>Show Favorites</label>
+            <input
+              type="checkbox"
+              checked={showFavorites}
+              onChange={() => setShowFavorites(f => !f)}
+            />
+          </div>
         </aside>
 
         <main className="courses-container">
@@ -253,23 +279,25 @@ function App() {
             <div className="courses-grid">
               {displayedCourses.map((course) => (
                 <div className="course-card" key={course.id}>
-                  <div className="card-header">
-                    <h3>{course.header}</h3>
-                    <span className="credits">{course.credits} credit{course.credits !== 1 ? 's' : ''}</span>
-                  </div>
-                  <h4>{course.title}</h4>
-                  <p className="description">{course.description.substring(0, 120)}...</p>
-                  <div className="semester-badges">
-                    {course.semesters.map((sem, idx) => (
-                      <span key={idx} className={`semester ${sem}`}>
-                        {sem === 'F' ? 'Fall' : sem === 'W' ? 'Winter' : sem === 'SP' ? 'Spring' : 'Summer'}
-                      </span>
-                    ))}
-                  </div>
-                  <button className="more-button" onClick={() => openModal(course)}>
-                    Details
+                <div className="card-header">
+                  <h3>{course.header}</h3>
+                  <span className="credits">{course.credits} credits</span>
+                  <button 
+                    className={`favorite-button ${favorites.includes(course.id) ? 'favorited' : ''}`}
+                    onClick={() => toggleFavorite(course.id)}
+                  >
+                    {favorites.includes(course.id) ? '★ Unfavorite' : '☆ Favorite'}
                   </button>
                 </div>
+                <h4>{course.title}</h4>
+                <p className="description">{course.description.substring(0, 120)}...</p>
+                <div className="semester-badges">
+                  {course.semesters.map((sem, idx) => (
+                    <span key={idx} className={`semester ${sem}`}>{sem}</span>
+                  ))}
+                </div>
+                <button className="more-button" onClick={() => openModal(course)}>Details</button>
+              </div>
               ))}
             </div>
           </div>

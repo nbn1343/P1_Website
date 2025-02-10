@@ -221,3 +221,7 @@ select, input {
   gap: 1rem;
   margin-top: 1.5rem;
 }
+
+.favorited {
+  color: rgb(177, 156, 39);
+}
