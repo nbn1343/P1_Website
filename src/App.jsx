@@ -12,6 +12,9 @@ function App() {
 
   const [favorites, setFavorites] = useState([]);
 
+  const [showCore, setShowCore] = useState(false);
+
+
   const [showFavorites, setShowFavorites] = useState(false);
 
   const filteredCourses = coursesData.filter(course => {
@@ -22,15 +25,18 @@ function App() {
     const searchMatch = course.header.toLowerCase().includes(searchTerm.toLowerCase()) ||
       course.title.toLowerCase().includes(searchTerm.toLowerCase());
     const favoritesMatch = !showFavorites || favorites.includes(course.id);
+    const coreMatch = !showCore || course.isCore;
   
-    return levelMatch && creditMatch && semesterMatch && searchMatch && favoritesMatch;
+    return levelMatch && creditMatch && semesterMatch && searchMatch && favoritesMatch && coreMatch;
   });
 
   const totalPages = Math.ceil(filteredCourses.length / coursesPerPage);
-  const displayedCourses = filteredCourses.slice(
-    (currentPage - 1) * coursesPerPage,
-    currentPage * coursesPerPage
-  );
+  const displayedCourses = showFavorites && favorites.length === 0
+  ? []
+  : filteredCourses.slice(
+      (currentPage - 1) * coursesPerPage,
+      currentPage * coursesPerPage
+    );
 
   const toggleFavorite = (courseId) => {
     setFavorites(currentFavorites => {
@@ -114,35 +120,51 @@ function App() {
               onChange={() => setShowFavorites(f => !f)}
             />
           </div>
+
+          <div className="filter-group">
+            <label>Show Core Classes</label>
+            <input
+              type="checkbox"
+              checked={showCore}
+              onChange={() => setShowCore(c => !c)}
+            />
+          </div>
         </aside>
 
         <main className="courses-container">
-          <div className="courses-scroll">
-            <div className="courses-grid">
-              {displayedCourses.map((course) => (
-                <div className="course-card" key={course.id}>
-                <div className="card-header">
-                  <h3>{course.header}</h3>
-                  <span className="credits">{course.credits} credits</span>
-                  <button 
-                    className={`favorite-button ${favorites.includes(course.id) ? 'favorited' : ''}`}
-                    onClick={() => toggleFavorite(course.id)}
-                  >
-                    {favorites.includes(course.id) ? '★ Unfavorite' : '☆ Favorite'}
-                  </button>
-                </div>
-                <h4>{course.title}</h4>
-                <p className="description">{course.description.substring(0, 120)}...</p>
-                <div className="semester-badges">
-                  {course.semesters.map((sem, idx) => (
-                    <span key={idx} className={`semester ${sem}`}>{sem}</span>
-                  ))}
-                </div>
-                <button className="more-button" onClick={() => openModal(course)}>Details</button>
-              </div>
-              ))}
-            </div>
-          </div>
+  <div className="courses-scroll">
+    <div className="courses-grid">
+      {showFavorites && favorites.length === 0 ? (
+        <div className="no-favorites-message">NO FAVORITES SELECTED</div>
+      ) : (
+        displayedCourses.map((course) => (
+          <div className="course-card" key={course.id}>
+  <div className="card-header">
+    <h3>
+      {course.header}
+      {course.isCore && <span className="core-badge">Core</span>}
+    </h3>
+    <span className="credits">{course.credits} credits</span>
+    <button
+      className={`favorite-button ${favorites.includes(course.id) ? 'favorited' : ''}`}
+      onClick={() => toggleFavorite(course.id)}
+    >
+      {favorites.includes(course.id) ? '★ Unfavorite' : '☆ Favorite'}
+    </button>
+  </div>
+  <h4>{course.title}</h4>
+  <p className="description">{course.description.substring(0, 120)}...</p>
+  <div className="semester-badges">
+    {course.semesters.map((sem, idx) => (
+      <span key={idx} className={`semester ${sem}`}>{sem}</span>
+    ))}
+  </div>
+  <button className="more-button" onClick={() => openModal(course)}>Details</button>
+</div>
+        ))
+      )}
+    </div>
+  </div>
 
           <div className="pagination">
             <button 
@@ -163,31 +185,37 @@ function App() {
       </div>
 
       {modalCourse && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModal}>×</button>
-            <h2>{modalCourse.header}: {modalCourse.title}</h2>
-            <button
-                className={`favorite-button ${favorites.includes(modalCourse.id) ? 'favorited' : ''}`}
-                onClick={() => toggleFavorite(modalCourse.id)}
-              >
-                {favorites.includes(modalCourse.id) ? '★ Unfavorite' : '☆ Favorite'}
-            </button>
-            <p className="modal-description">{modalCourse.description}</p>
-            <div className="modal-details">
-              <p><strong>Credits:</strong> {modalCourse.credits}</p>
-              <p><strong>Semesters Offered:</strong></p>
-              <div className="modal-semesters">
-                {modalCourse.semesters.map((sem, idx) => (
-                  <span key={idx} className={`semester ${sem}`}>
-                    {sem === 'F' ? 'Fall' : sem === 'W' ? 'Winter' : sem === 'SP' ? 'Spring' : 'Summer'}
-                  </span>
-                ))}
-              </div>
-            </div>
+  <div className="modal-overlay" onClick={closeModal}>
+    <div className="modal-content" onClick={e => e.stopPropagation()}>
+      <button className="modal-close" onClick={closeModal}>×</button>
+      <div className="modal-inner-content">
+        <h2>
+          {modalCourse.header}: {modalCourse.title}
+          {modalCourse.isCore && <span className="core-badge">Core</span>}
+        </h2>
+        <button
+          className={`favorite-button ${favorites.includes(modalCourse.id) ? 'favorited' : ''}`}
+          onClick={() => toggleFavorite(modalCourse.id)}
+        >
+          {favorites.includes(modalCourse.id) ? '★ Unfavorite' : '☆ Favorite'}
+        </button>
+        <p className="modal-description">{modalCourse.description}</p>
+        <div className="modal-details">
+          <p><strong>Credits:</strong> {modalCourse.credits}</p>
+          <p><strong>Semesters Offered:</strong></p>
+          <div className="modal-semesters">
+            {modalCourse.semesters.map((sem, idx) => (
+              <span key={idx} className={`semester ${sem}`}>
+                {sem === 'F' ? 'Fall' : sem === 'W' ? 'Winter' : sem === 'SP' ? 'Spring' : 'Summer'}
+              </span>
+            ))}
           </div>
         </div>
-      )}
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

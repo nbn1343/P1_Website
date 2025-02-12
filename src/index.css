@@ -162,6 +162,24 @@ select, input {
   width: 100%;
 }
 
+.no-favorites-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #888;
+  padding: 2rem;
+}
+
+.core-badge {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -199,11 +217,20 @@ select, input {
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  max-width: 600px;
   width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
+  max-width: 800px; /* Increased from 600px */
+  height: auto;
+  max-height: 90vh;
+  overflow: hidden; /* Changed from overflow-y: auto */
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-inner-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-close {
@@ -222,10 +249,19 @@ select, input {
 }
 
 .modal-details {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex; /* Changed to flex */
+  flex-direction: column; /* Stack elements vertically */
   gap: 1rem;
   margin-top: 1.5rem;
+}
+
+.modal-details p {
+  margin: 0; /* Remove default paragraph margins */
+}
+
+.modal-semesters {
+  display: flex; /* Align semesters horizontally */
+  gap: 0.5rem;
 }
 
 .favorited {
@@ -243,3 +279,6 @@ select, input {
 .favorite-button.favorited {
   color: gold;
 }
+
+
+
