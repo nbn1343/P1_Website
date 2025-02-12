@@ -93,6 +93,7 @@ select, input {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 1rem;
+  max-height: 500px; /* Adjust as needed */
 }
 
 .courses-grid {
@@ -280,5 +281,19 @@ select, input {
   color: gold;
 }
 
+.top-pagination {
+  margin-bottom: 20px;
+}
 
+.bottom-pagination {
+  margin-top: 20px;
+}
 
+.footer {
+  background-color: #f0f0f0;
+  padding: 1rem;
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: #555;
+}

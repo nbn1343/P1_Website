@@ -216,7 +216,7 @@ const coursesData = [
     "isCore": false
   },
   {
-    "id": "cs486",
+    "id": "cs486_1",
     "header": "CS 486",
     "title": "Verification and Validation",
     "description": "Software testing techniques, test-driven development, and formal verification methods.",
@@ -369,7 +369,7 @@ const coursesData = [
     "isCore": false
   },
   {
-    "id": "cs486",
+    "id": "cs486_2",
     "header": "CS 486",
     "title": "Verification and Validation",
     "description": "Software testing techniques, test-driven development, and formal verification methods.",
