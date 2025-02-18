@@ -187,7 +187,7 @@ function App() {
               Reset Filters
             </button>
           </div>
-          
+
         </aside>
 
         <main className="courses-container">
@@ -220,7 +220,7 @@ function App() {
                         {course.header}
                         {course.isCore && <span className="core-badge">Core</span>}
                       </h3>
-                      <span className="credits">{course.credits} credits</span>
+                      {/* <span className="credits">{course.credits} credits</span> */}
                       <button
                         className={`favorite-button ${
                           favorites.includes(course.id) ? 'favorited' : ''
@@ -229,6 +229,9 @@ function App() {
                       >
                         {favorites.includes(course.id) ? '★ Unfavorite' : '☆ Favorite'}
                       </button>
+                    </div>
+                    <div class="credit-spacing">
+                      <span className="credits">{course.credits} credits</span>
                     </div>
                     <h4>{course.title}</h4>
                     <p className="description">{course.description.substring(0, 120)}...</p>

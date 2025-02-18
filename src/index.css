@@ -193,10 +193,15 @@ select, input {
 }
 
 .credits {
-  background: #f0f4f8;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.credit-spacing {
+  margin-top: -30px;
+  margin-left: -5px;
 }
 
 .semester-badges {
