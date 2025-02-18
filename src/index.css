@@ -170,7 +170,10 @@ select, input {
   padding: 1.5rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: transform 0.2s;
-  height: 270px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 350px;
 }
 
 .course-card:hover {
@@ -190,10 +193,15 @@ select, input {
 }
 
 .credits {
-  background: #f0f4f8;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.credit-spacing {
+  margin-top: -30px;
+  margin-left: -5px;
 }
 
 .semester-badges {
