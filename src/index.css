@@ -386,3 +386,19 @@ select, input {
   }
 }
 
+.reset-button {
+	background-color: #002e5d; /* Red background */
+	color: white;
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.reset-button:hover {
+	background-color: #47688a; /* Darker red on hover */
+}
+
+.reset-button:focus {
+	outline: none;
+}

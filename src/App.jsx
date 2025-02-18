@@ -18,6 +18,17 @@ function App() {
 
   const [showFavorites, setShowFavorites] = useState(false);
 
+  const resetFilters = () => {
+    setSearchTerm('');
+    setCourseLevel('All Levels');
+    setCreditHours('All Credits');
+    setSemester('All Semesters');
+    setShowFavorites(false);
+    setShowCore(false);
+    setSortOrder('asc');
+    setCurrentPage(1);
+  }
+
   const filteredCourses = coursesData
     .filter((course) => {
       const levelMatch =
@@ -170,6 +181,13 @@ function App() {
               onChange={() => setShowCore((c) => !c)}
             />
           </div>
+
+          <div className="filter-group">
+            <button className="reset-button" onClick={resetFilters}>
+              Reset Filters
+            </button>
+          </div>
+          
         </aside>
 
         <main className="courses-container">
