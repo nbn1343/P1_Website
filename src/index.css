@@ -170,7 +170,10 @@ select, input {
   padding: 1.5rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: transform 0.2s;
-  height: 270px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 350px;
 }
 
 .course-card:hover {
