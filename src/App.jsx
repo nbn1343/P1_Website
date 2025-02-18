@@ -241,10 +241,10 @@ function App() {
                 displayedCourses.map((course) => (
                   <div className="course-card" key={course.id}>
                     <div className="card-header">
-                      <h3>
+                      <h2>
                         {course.header}
                         {course.isCore && <span className="core-badge">Core</span>}
-                      </h3>
+                      </h2>
                       {/* <span className="credits">{course.credits} credits</span> */}
                       <button
                         className={`favorite-button ${
