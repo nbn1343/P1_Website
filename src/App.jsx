@@ -8,7 +8,7 @@ function App() {
   const [courseLevel, setCourseLevel] = useState('All Levels');
   const [creditHours, setCreditHours] = useState('All Credits');
   const [semester, setSemester] = useState('All Semesters');
-  const coursesPerPage = 10;
+  const coursesPerPage = 21;
 
   const [favorites, setFavorites] = useState([]);
 
@@ -88,6 +88,31 @@ function App() {
     setCurrentPage(1); // Reset to the first page
   };
 
+  const handleCourseLevelChange = (newCourseLevel) => {
+    setCourseLevel(newCourseLevel);
+    setCurrentPage(1); // Reset to the first page
+  };
+
+  const handleCreditHoursChange = (newCreditHours) => {
+    setCreditHours(newCreditHours);
+    setCurrentPage(1); // Reset to the first page
+  };
+
+  const handleSemesterChange = (newSemester) => {
+    setSemester(newSemester);
+    setCurrentPage(1); // Reset to the first page
+  };
+
+  const handleFavoriteChange = (newShowFavorites) => {
+    setShowFavorites(newShowFavorites);
+    setCurrentPage(1); // Reset to the first page
+  }
+
+  const handleCoreChange = (newShowCore) => { 
+    setShowCore(newShowCore);
+    setCurrentPage(1); // Reset to the first page
+  }
+
   return (
     <div className="app-container">
       <header className="header">
@@ -130,7 +155,7 @@ function App() {
 
           <div className="filter-group">
             <label>Course Level</label>
-            <select value={courseLevel} onChange={(e) => setCourseLevel(e.target.value)}>
+            <select value={courseLevel} onChange={(e) => handleCourseLevelChange(e.target.value)}>
               <option>All Levels</option>
               <option value="100">100 Level</option>
               <option value="200">200 Level</option>
@@ -141,7 +166,7 @@ function App() {
 
           <div className="filter-group">
             <label>Credit Hours</label>
-            <select value={creditHours} onChange={(e) => setCreditHours(e.target.value)}>
+            <select value={creditHours} onChange={(e) => handleCreditHoursChange(e.target.value)}>
               <option>All Credits</option>
               {[...new Set(coursesData.map((c) => c.credits))]
                 .sort()
@@ -155,7 +180,7 @@ function App() {
 
           <div className="filter-group">
             <label>Semester</label>
-            <select value={semester} onChange={(e) => setSemester(e.target.value)}>
+            <select value={semester} onChange={(e) => handleSemesterChange(e.target.value)}>
               <option>All Semesters</option>
               <option value="F">Fall</option>
               <option value="W">Winter</option>
@@ -169,7 +194,7 @@ function App() {
             <input
               type="checkbox"
               checked={showFavorites}
-              onChange={() => setShowFavorites((f) => !f)}
+              onChange={() => handleFavoriteChange((f) => !f)}
             />
           </div>
 
@@ -178,7 +203,7 @@ function App() {
             <input
               type="checkbox"
               checked={showCore}
-              onChange={() => setShowCore((c) => !c)}
+              onChange={() => handleCoreChange((c) => !c)}
             />
           </div>
 
