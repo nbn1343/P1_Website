@@ -145,6 +145,8 @@ select, input {
   grid-column: 2;
   display: flex;
   flex-direction: column;
+  min-width: 920px;
+  min-height: 1000px;
 }
 
 .courses-scroll {
