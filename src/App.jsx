@@ -252,7 +252,7 @@ function App() {
                         }`}
                         onClick={() => toggleFavorite(course.id)}
                       >
-                        {favorites.includes(course.id) ? '★ Unfavorite' : '☆ Favorite'}
+                        {favorites.includes(course.id) ? '★' : '☆'}
                       </button>
                     </div>
                     <h4>{course.title}</h4>
