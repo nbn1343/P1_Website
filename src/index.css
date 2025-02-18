@@ -393,6 +393,7 @@ select, input {
 	padding: 0.5rem 1rem;
 	border-radius: 4px;
 	cursor: pointer;
+  margin-top: 1rem;
 }
 
 .reset-button:hover {
