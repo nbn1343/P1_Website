@@ -50,7 +50,6 @@ function App() {
       );
     })
     .sort((a, b) => {
-      // Add this sort
       const levelA = parseInt(a.header.match(/\d+/)[0]);
       const levelB = parseInt(b.header.match(/\d+/)[0]);
 
@@ -123,96 +122,97 @@ function App() {
         </p>
       </header>
 
-      <div className="main-content">
-        <aside className="filters">
-          <div className="filter-group">
-            <label>Search</label>
-            <div className="search-container">
+      <div className="three-column-layout">
+        <aside className="filters-sidebar">
+          <div className="filters">
+            <div className="filter-group">
+              <label>Search</label>
+              <div className="search-container">
+                <input
+                  type="text"
+                  placeholder="Search courses..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                {searchTerm && (
+                  <button className="clear-button" onClick={() => setSearchTerm('')}>
+                    ×
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div className="filter-group">
+              <label>Sort Courses</label>
+              <select
+                value={sortOrder}
+                onChange={(e) => handleSortOrderChange(e.target.value)}
+              >
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label>Course Level</label>
+              <select value={courseLevel} onChange={(e) => handleCourseLevelChange(e.target.value)}>
+                <option>All Levels</option>
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400">400 Level</option>
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label>Credit Hours</label>
+              <select value={creditHours} onChange={(e) => handleCreditHoursChange(e.target.value)}>
+                <option>All Credits</option>
+                {[...new Set(coursesData.map((c) => c.credits))]
+                  .sort()
+                  .map((credit) => (
+                    <option key={credit} value={credit}>
+                      {credit} credit{credit !== 1 ? 's' : ''}
+                    </option>
+                  ))}
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label>Semester</label>
+              <select value={semester} onChange={(e) => handleSemesterChange(e.target.value)}>
+                <option>All Semesters</option>
+                <option value="F">Fall</option>
+                <option value="W">Winter</option>
+                <option value="SP">Spring</option>
+                <option value="SU">Summer</option>
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label>Show Favorites</label>
               <input
-                type="text"
-                placeholder="Search courses..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                type="checkbox"
+                checked={showFavorites}
+                onChange={() => handleFavoriteChange(!showFavorites)}
               />
-              {searchTerm && (
-                <button className="clear-button" onClick={() => setSearchTerm('')}>
-                  ×
-                </button>
-              )}
+            </div>
+
+            <div className="filter-group">
+              <label>Show Core Classes</label>
+              <input
+                type="checkbox"
+                checked={showCore}
+                onChange={() => handleCoreChange(!showCore)}
+              />
+            </div>
+
+            <div className="filter-group">
+              <button className="reset-button" onClick={resetFilters}>
+                Reset Filters
+              </button>
             </div>
           </div>
-
-          <div className="filter-group">
-            <label>Sort Courses</label>
-            <select
-              value={sortOrder}
-              onChange={(e) => handleSortOrderChange(e.target.value)} // Use the handler
-            >
-              <option value="asc">Ascending</option>
-              <option value="desc">Descending</option>
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label>Course Level</label>
-            <select value={courseLevel} onChange={(e) => handleCourseLevelChange(e.target.value)}>
-              <option>All Levels</option>
-              <option value="100">100 Level</option>
-              <option value="200">200 Level</option>
-              <option value="300">300 Level</option>
-              <option value="400">400 Level</option>
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label>Credit Hours</label>
-            <select value={creditHours} onChange={(e) => handleCreditHoursChange(e.target.value)}>
-              <option>All Credits</option>
-              {[...new Set(coursesData.map((c) => c.credits))]
-                .sort()
-                .map((credit) => (
-                  <option key={credit} value={credit}>
-                    {credit} credit{credit !== 1 ? 's' : ''}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label>Semester</label>
-            <select value={semester} onChange={(e) => handleSemesterChange(e.target.value)}>
-              <option>All Semesters</option>
-              <option value="F">Fall</option>
-              <option value="W">Winter</option>
-              <option value="SP">Spring</option>
-              <option value="SU">Summer</option>
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label>Show Favorites</label>
-            <input
-              type="checkbox"
-              checked={showFavorites}
-              onChange={() => handleFavoriteChange((f) => !f)}
-            />
-          </div>
-
-          <div className="filter-group">
-            <label>Show Core Classes</label>
-            <input
-              type="checkbox"
-              checked={showCore}
-              onChange={() => handleCoreChange((c) => !c)}
-            />
-          </div>
-
-          <div className="filter-group">
-            <button className="reset-button" onClick={resetFilters}>
-              Reset Filters
-            </button>
-          </div>
-
         </aside>
 
         <main className="courses-container">
@@ -245,7 +245,6 @@ function App() {
                         {course.header}
                         {course.isCore && <span className="core-badge">Core</span>}
                       </h2>
-                      {/* <span className="credits">{course.credits} credits</span> */}
                       <button
                         className={`favorite-button ${
                           favorites.includes(course.id) ? 'favorited' : ''
@@ -255,7 +254,7 @@ function App() {
                         {favorites.includes(course.id) ? '★' : '☆'}
                       </button>
                     </div>
-                    <div class="credit-spacing">
+                    <div className="credit-spacing">
                       <span className="credits">{course.credits} credits</span>
                     </div>
                     <h4>{course.title}</h4>
@@ -293,6 +292,72 @@ function App() {
             </button>
           </div>
         </main>
+
+        <aside className="major-outline-sidebar">
+          <div className="major-outline">
+            <h2>CS Major Outline</h2>
+            
+            <div className="outline-section">
+              <h3>Core Requirements</h3>
+              <ul className="requirement-list">
+                {coursesData.filter(course => course.isCore).map(course => (
+                  <li key={course.id} className={favorites.includes(course.id) ? 'favorited-course' : ''}>
+                    <span className="course-code">{course.header}</span>
+                    <span className="course-title">{course.title}</span>
+                    <span className="course-credits">({course.credits} cr)</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div className="outline-section">
+              <h3>Degree Progress</h3>
+              <div className="progress-container">
+                <div className="progress-info">
+                  <div className="progress-label">Core Courses</div>
+                  <div className="progress-value">
+                    {coursesData.filter(c => c.isCore && favorites.includes(c.id)).length} / {coursesData.filter(c => c.isCore).length}
+                  </div>
+                </div>
+                <div className="progress-bar">
+                  <div 
+                    className="progress-fill"
+                    style={{ 
+                      width: `${(coursesData.filter(c => c.isCore && favorites.includes(c.id)).length / coursesData.filter(c => c.isCore).length) * 100}%` 
+                    }}
+                  ></div>
+                </div>
+              </div>
+              
+              <div className="total-credits">
+                <h4>Credit Summary</h4>
+                <div className="credits-container">
+                  <p><strong>Favorited Credits:</strong> {coursesData.filter(c => favorites.includes(c.id)).reduce((sum, course) => sum + course.credits, 0)}</p>
+                  <p><strong>Total Required:</strong> 120</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="outline-section">
+              <h3>Graduation Requirements</h3>
+              <div className="requirement-card">
+                <h4>Course Distribution</h4>
+                <ul>
+                  <li>Core CS Courses: 30 credits</li>
+                  <li>CS Electives: 15 credits</li>
+                  <li>Math & Science: 20 credits</li>
+                  <li>General Education: 40 credits</li>
+                  <li>Free Electives: 15 credits</li>
+                </ul>
+              </div>
+              
+              <div className="requirement-card">
+                <h4>Capstone Requirement</h4>
+                <p>Complete CS 494 & CS 495 in consecutive semesters.</p>
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
 
       {modalCourse && (
