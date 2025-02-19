@@ -54,7 +54,8 @@
 .filter-group label {
   color: #212529;
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
   font-size: 0.9rem;
 }
 
@@ -145,7 +146,7 @@ select, input {
   grid-column: 2;
   display: flex;
   flex-direction: column;
-  min-width: 920px;
+  min-width: 950px;
   min-height: 1000px;
 }
 
