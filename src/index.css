@@ -131,6 +131,27 @@
   background: #dee2e6;
 }
 
+.filter-clear-button {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #e9ecef;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.filter-clear-button:hover {
+  background: #dee2e6;
+}
+
 .reset-button {
   background-color: #002e5d;
   color: white;
@@ -153,7 +174,7 @@
   display: flex;
   flex-direction: column;
   min-height: 800px; /* Set a consistent minimum height */
-  height: 800px; /* Add this to maintain consistent height */
+  height: 100%; /* Add this to maintain consistent height */
   min-width: 986px;
 }
 
