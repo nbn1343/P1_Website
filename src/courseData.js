@@ -6,7 +6,8 @@ const coursesData = [
     "description": "Teaches how to design, develop, reason about, and test programs. Topics include data types, control structures, functions, objects, basic algorithms, and problem-solving strategies.",
     "credits": 3,
     "semesters": ["F", "W", "SP", "SU"],
-    "isCore": true
+    "isCore": true,
+    "instructors": ["Reynolds", "Wilkerson"]
   },
   {
     "id": "cs180",
@@ -15,7 +16,8 @@ const coursesData = [
     "description": "Statistics; linear algebra; machine learning; data cleaning and visualization.",
     "credits": 3,
     "semesters": ["F", "W", "SP", "SU"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Stevens"]
   },
   {
     "id": "cs202",
@@ -24,7 +26,8 @@ const coursesData = [
     "description": "The first of three experiential learning labs that will provide students with hands-on experience.",
     "credits": 1,
     "semesters": ["F", "W", "SP", "SU"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Bean"]
   },
   {
     "id": "cs203",
@@ -33,7 +36,8 @@ const coursesData = [
     "description": "The second of three experiential learning labs that will provide students with hands-on experience.",
     "credits": 1,
     "semesters": ["F", "W", "SP", "SU"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Jensen"]
   },
   {
     "id": "cs204",
@@ -42,7 +46,8 @@ const coursesData = [
     "description": "The third of three experiential learning labs that will provide students with hands-on experience.",
     "credits": 1,
     "semesters": ["F", "W", "SP", "SU"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Reynolds", "Stevens"]
   },
   {
     "id": "cs224",
@@ -51,7 +56,8 @@ const coursesData = [
     "description": "How a computer works to execute sequential code: low level data representation and instruction processing.",
     "credits": 3,
     "semesters": ["F", "W", "SP", "SU"],
-    "isCore": true
+    "isCore": true,
+    "instructors": ["Wilkerson", "Bean"]
   },
   {
     "id": "cs235",
@@ -60,7 +66,8 @@ const coursesData = [
     "description": "Fundamental data structures and algorithms; basic algorithm analysis.",
     "credits": 3,
     "semesters": ["F", "W", "SP", "SU"],
-    "isCore": true
+    "isCore": true,
+    "instructors": ["Jensen", "Reynolds"]
   },
   {
     "id": "cs236",
@@ -69,7 +76,8 @@ const coursesData = [
     "description": "Introduction to grammars and parsing; predicate and propositional logic; proof techniques.",
     "credits": 3,
     "semesters": ["F", "W", "SP", "SU"],
-    "isCore": true
+    "isCore": true,
+    "instructors": ["Stevens", "Bean"]
   },
   {
     "id": "cs312",
@@ -78,7 +86,8 @@ const coursesData = [
     "description": "Advanced algorithm analysis, design techniques, graph algorithms, probabilistic algorithms, and parallel computing.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": true
+    "isCore": true,
+    "instructors": ["Wilkerson"]
   },
   {
     "id": "cs324",
@@ -87,7 +96,8 @@ const coursesData = [
     "description": "Operating systems, concurrent programming, process management, memory management, file systems, and networking.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": true
+    "isCore": true,
+    "instructors": ["Jensen", "Stevens"]
   },
   {
     "id": "cs340",
@@ -96,7 +106,8 @@ const coursesData = [
     "description": "Software development methodologies, object-oriented design patterns, testing strategies, and software maintenance.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": true
+    "isCore": true,
+    "instructors": ["Reynolds", "Bean"]
   },
   {
     "id": "cs330",
@@ -105,7 +116,8 @@ const coursesData = [
     "description": "Programming language paradigms, syntax and semantics, type systems, functional programming, and language implementation techniques.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Wilkerson"]
   },
   {
     "id": "cs345",
@@ -114,7 +126,8 @@ const coursesData = [
     "description": "Process management, memory allocation, file systems, device management, and distributed systems concepts.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Bean", "Stevens"]
   },
   {
     "id": "cs355",
@@ -123,7 +136,8 @@ const coursesData = [
     "description": "2D graphics programming, user interface design, event handling, and interactive applications development.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Reynolds"]
   },
   {
     "id": "cs450",
@@ -132,7 +146,8 @@ const coursesData = [
     "description": "3D graphics, rendering, geometric modeling, animation, visualization techniques, and graphics programming.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Jensen", "Bean"]
   },
   {
     "id": "cs465",
@@ -141,7 +156,8 @@ const coursesData = [
     "description": "Cryptography, network security, authentication, access control, and software security principles.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Stevens", "Wilkerson"]
   },
   {
     "id": "cs470",
@@ -150,7 +166,8 @@ const coursesData = [
     "description": "Machine learning, neural networks, natural language processing, and expert systems development.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Bean"]
   },
   {
     "id": "cs260",
@@ -159,7 +176,8 @@ const coursesData = [
     "description": "HTML, CSS, JavaScript, and server-side programming for web applications.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Jensen", "Reynolds"]
   },
   {
     "id": "cs356",
@@ -168,7 +186,8 @@ const coursesData = [
     "description": "Design and development of mobile applications for iOS and Android platforms.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Wilkerson", "Stevens"]
   },
   {
     "id": "cs401",
@@ -177,7 +196,8 @@ const coursesData = [
     "description": "Ethical issues in computing, privacy, intellectual property, and professional responsibility.",
     "credits": 2,
     "semesters": ["F", "W"],
-    "isCore": true
+    "isCore": true,
+    "instructors": ["Bean", "Jensen"]
   },
   {
     "id": "cs452",
@@ -186,7 +206,8 @@ const coursesData = [
     "description": "Relational database design, SQL, database management systems, and data warehousing.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Stevens", "Reynolds"]
   },
   {
     "id": "cs460",
@@ -195,7 +216,8 @@ const coursesData = [
     "description": "Network protocols, architecture, security, and distributed systems.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Wilkerson", "Bean"]
   },
   {
     "id": "cs472",
@@ -204,7 +226,8 @@ const coursesData = [
     "description": "Supervised and unsupervised learning algorithms, neural networks, and deep learning.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Jensen"]
   },
   {
     "id": "cs480",
@@ -213,7 +236,8 @@ const coursesData = [
     "description": "Large-scale software development, project management, and software architecture.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Stevens", "Reynolds"]
   },
   {
     "id": "cs486_1",
@@ -222,7 +246,8 @@ const coursesData = [
     "description": "Software testing techniques, test-driven development, and formal verification methods.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Bean", "Wilkerson"]
   },
   {
     "id": "cs490r",
@@ -231,7 +256,8 @@ const coursesData = [
     "description": "Advanced topics in computer science, varying by semester.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Jensen", "Stevens"]
   },
   {
     "id": "cs494",
@@ -240,7 +266,8 @@ const coursesData = [
     "description": "First part of the senior project course, focusing on project planning and design.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": true
+    "isCore": true,
+    "instructors": ["Reynolds", "Bean"]
   },
   {
     "id": "cs495",
@@ -249,7 +276,8 @@ const coursesData = [
     "description": "Second part of the senior project course, focusing on implementation and presentation.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": true
+    "isCore": true,
+    "instructors": ["Wilkerson", "Jensen"]
   },
   {
     "id": "cs240",
@@ -258,7 +286,8 @@ const coursesData = [
     "description": "Object-oriented programming, design patterns, and advanced language features.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Stevens", "Bean"]
   },
   {
     "id": "cs252",
@@ -267,7 +296,8 @@ const coursesData = [
     "description": "Formal languages, automata theory, and computability.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Reynolds"]
   },
   {
     "id": "cs301",
@@ -276,7 +306,8 @@ const coursesData = [
     "description": "Advanced algorithm design, complexity analysis, and NP-completeness.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Jensen", "Wilkerson"]
   },
   {
     "id": "cs360",
@@ -285,7 +316,8 @@ const coursesData = [
     "description": "Client-server architecture, RESTful APIs, and full-stack web development.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Bean", "Stevens"]
   },
   {
     "id": "cs405",
@@ -294,7 +326,8 @@ const coursesData = [
     "description": "Entrepreneurship in software, business models, and startup strategies.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Wilkerson", "Reynolds"]
   },
   {
     "id": "cs412",
@@ -303,7 +336,8 @@ const coursesData = [
     "description": "Principles and paradigms of distributed computing systems.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Jensen"]
   },
   {
     "id": "cs428",
@@ -312,7 +346,8 @@ const coursesData = [
     "description": "Software development processes, requirements engineering, and project management.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Bean", "Reynolds"]
   },
   {
     "id": "cs431",
@@ -321,7 +356,8 @@ const coursesData = [
     "description": "Knowledge representation, reasoning, and machine learning techniques.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Stevens", "Wilkerson"]
   },
   {
     "id": "cs455",
@@ -330,7 +366,8 @@ const coursesData = [
     "description": "3D modeling, rendering, and animation techniques.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Jensen", "Bean"]
   },
   {
     "id": "cs462",
@@ -339,7 +376,8 @@ const coursesData = [
     "description": "Design and implementation of scalable distributed systems and cloud computing.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Reynolds", "Stevens"]
   },
   {
     "id": "cs474",
@@ -348,7 +386,8 @@ const coursesData = [
     "description": "Neural network architectures, training techniques, and applications in various domains.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Wilkerson", "Bean"]
   },
   {
     "id": "cs478",
@@ -357,7 +396,8 @@ const coursesData = [
     "description": "Data preprocessing, association rules, clustering, and classification techniques.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Jensen"]
   },
   {
     "id": "cs484",
@@ -366,7 +406,8 @@ const coursesData = [
     "description": "Parallel algorithms, architectures, and programming models.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Stevens", "Reynolds"]
   },
   {
     "id": "cs486_2",
@@ -375,7 +416,8 @@ const coursesData = [
     "description": "Software testing techniques, test-driven development, and formal verification methods.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Bean", "Wilkerson"]
   },
   {
     "id": "cs493r",
@@ -384,7 +426,8 @@ const coursesData = [
     "description": "Applying computer science skills to solve real-world problems in non-profit and humanitarian contexts.",
     "credits": 3,
     "semesters": ["F", "W"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Jensen", "Stevens"]
   },
   {
     "id": "cs497r",
@@ -393,7 +436,8 @@ const coursesData = [
     "description": "Directed research in computer science under faculty supervision.",
     "credits": 3,
     "semesters": ["F", "W", "SP", "SU"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Reynolds", "Bean"]
   },
   {
     "id": "cs498r",
@@ -402,7 +446,8 @@ const coursesData = [
     "description": "Assisting in teaching undergraduate computer science courses.",
     "credits": 3,
     "semesters": ["F", "W", "SP", "SU"],
-    "isCore": false
+    "isCore": false,
+    "instructors": ["Wilkerson"]
   },
   {
     "id": "cs501",
@@ -411,8 +456,9 @@ const coursesData = [
     "description": "In-depth study of advanced algorithmic techniques and analysis.",
     "credits": 3,
     "semesters": ["F"],
-    "isCore": false
-  },
-  ];
+    "isCore": false,
+    "instructors": ["Jensen", "Stevens"]
+  }
+]
 
-  export default coursesData;
+export default coursesData
