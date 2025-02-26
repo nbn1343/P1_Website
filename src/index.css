@@ -169,11 +169,146 @@
   padding-right: 1rem;
 }
 
-.filter-group {
-  margin-bottom: 1.2rem;
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.filter-pill {
+  display: flex;
+  align-items: center;
+  background-color: #e9f5ff;
+  color: #002E5D;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.2s ease-in-out;
+  border: 1px solid #cce5ff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.filter-pill button {
+  background: none;
+  border: none;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.filter-pill button:hover {
+  color: #dc3545;
+}
+
+/* Checkbox Group Styles */
+.checkbox-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #dee2e6;
+  border-radius: 4px;
+  appearance: none;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.checkbox-item input[type="checkbox"]:checked {
+  background: #002E5D;
+  border-color: #002E5D;
+}
+
+.checkbox-item input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-item label {
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+/* Semester-specific Pills */
+.filter-pill:has(span:contains("Fall")) {
+  background-color: #ffe4e1;
+  color: #8b0000;
+  border-color: #ffcccb;
+}
+
+.filter-pill:has(span:contains("Winter")) {
+  background-color: #e0ffff;
+  color: #008b8b;
+  border-color: #b0e0e6;
+}
+
+.filter-pill:has(span:contains("Spring")) {
+  background-color: #f0fff0;
+  color: #006400;
+  border-color: #c1e1c1;
+}
+
+.filter-pill:has(span:contains("Summer")) {
+  background-color: #fff0f5;
+  color: #ff69b4;
+  border-color: #ffb6c1;
+}
+
+/* Special filter pills */
+.filter-pill:has(span:contains("Core Classes")) {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-color: #c8e6c9;
+}
+
+.filter-pill:has(span:contains("Favorites")) {
+  background-color: #fff8e1;
+  color: #ff8f00;
+  border-color: #ffe082;
+}
+
+.filter-pill:has(span:contains("Search")) {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+  border-color: #e1bee7;
+}
+
+.filter-group {
+  margin-bottom: 1.5rem;
 }
 
 .filter-group label {
@@ -831,12 +966,8 @@
   }
   
   .pagination-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
     position: relative;
-    padding: 0 0.5rem;
+    z-index: 1;
   }
   
   .top-pagination {

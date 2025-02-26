@@ -5,9 +5,9 @@ function App() {
   const [modalCourse, setModalCourse] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
-  const [courseLevel, setCourseLevel] = useState('All Levels');
-  const [creditHours, setCreditHours] = useState('All Credits');
-  const [semester, setSemester] = useState('All Semesters');
+  const [courseLevels, setCourseLevels] = useState([]);
+  const [creditHours, setCreditHours] = useState([]);
+  const [semesters, setSemesters] = useState([]);
   const [coursesPerPage, setCoursesPerPage] = useState(21);
   const [showAllCourses, setShowAllCourses] = useState(false);
 
@@ -21,9 +21,9 @@ function App() {
 
   const resetFilters = () => {
     setSearchTerm('');
-    setCourseLevel('All Levels');
-    setCreditHours('All Credits');
-    setSemester('All Semesters');
+    setCourseLevels([]);
+    setCreditHours([]);
+    setSemesters([]);
     setShowFavorites(false);
     setShowCore(false);
     setSortOrder('asc');
@@ -32,19 +32,73 @@ function App() {
     setShowAllCourses(false);
   }
 
+  const toggleCourseLevel = (level) => {
+    setCourseLevels(prev => {
+      if (prev.includes(level)) {
+        return prev.filter(l => l !== level);
+      } else {
+        return [...prev, level];
+      }
+    });
+    setCurrentPage(1);
+  }
+
+  const toggleCreditHour = (credit) => {
+    setCreditHours(prev => {
+      if (prev.includes(credit)) {
+        return prev.filter(c => c !== credit);
+      } else {
+        return [...prev, credit];
+      }
+    });
+    setCurrentPage(1);
+  }
+
+  const toggleSemester = (sem) => {
+    setSemesters(prev => {
+      if (prev.includes(sem)) {
+        return prev.filter(s => s !== sem);
+      } else {
+        return [...prev, sem];
+      }
+    });
+    setCurrentPage(1);
+  }
+
+  const removeFilterPill = (type, value) => {
+    if (type === 'level') {
+      setCourseLevels(prev => prev.filter(level => level !== value));
+    } else if (type === 'credit') {
+      setCreditHours(prev => prev.filter(credit => credit !== value));
+    } else if (type === 'semester') {
+      setSemesters(prev => prev.filter(sem => sem !== value));
+    } else if (type === 'core') {
+      setShowCore(false);
+    } else if (type === 'favorites') {
+      setShowFavorites(false);
+    } else if (type === 'search') {
+      setSearchTerm('');
+    }
+    setCurrentPage(1);
+  };
+
   const filteredCourses = coursesData
     .filter((course) => {
-      const levelMatch =
-        courseLevel === 'All Levels' ||
-        Math.floor(parseInt(course.header.match(/\d+/)[0]) / 100) * 100 ===
-          parseInt(courseLevel);
-      const creditMatch =
-        creditHours === 'All Credits' || course.credits === parseInt(creditHours);
-      const semesterMatch =
-        semester === 'All Semesters' || course.semesters.includes(semester);
+      const levelMatch = courseLevels.length === 0 || 
+        courseLevels.some(level => 
+          Math.floor(parseInt(course.header.match(/\d+/)[0]) / 100) * 100 === parseInt(level)
+        );
+      
+      const creditMatch = creditHours.length === 0 || 
+        creditHours.includes(course.credits.toString());
+      
+      const semesterMatch = semesters.length === 0 || 
+        semesters.some(sem => course.semesters.includes(sem));
+      
       const searchMatch =
         course.header.toLowerCase().includes(searchTerm.toLowerCase()) ||
         course.title.toLowerCase().includes(searchTerm.toLowerCase());
+      
       const favoritesMatch = !showFavorites || favorites.includes(course.id);
       const coreMatch = !showCore || course.isCore;
 
@@ -92,21 +146,6 @@ function App() {
     setCurrentPage(1); // Reset to the first page
   };
 
-  const handleCourseLevelChange = (newCourseLevel) => {
-    setCourseLevel(newCourseLevel);
-    setCurrentPage(1); // Reset to the first page
-  };
-
-  const handleCreditHoursChange = (newCreditHours) => {
-    setCreditHours(newCreditHours);
-    setCurrentPage(1); // Reset to the first page
-  };
-
-  const handleSemesterChange = (newSemester) => {
-    setSemester(newSemester);
-    setCurrentPage(1); // Reset to the first page
-  };
-
   const handleFavoriteChange = (newShowFavorites) => {
     setShowFavorites(newShowFavorites);
     setCurrentPage(1); // Reset to the first page
@@ -127,6 +166,9 @@ function App() {
     }
     setCurrentPage(1); // Reset to the first page
   };
+
+  // Get all unique credit hours for multi-select
+  const uniqueCreditHours = [...new Set(coursesData.map(c => c.credits))].sort();
 
   return (
     <div className="app-container">
@@ -162,38 +204,55 @@ function App() {
           <div className="filters">
             <div className="filter-group">
               <label>Course Level</label>
-              <select value={courseLevel} onChange={(e) => handleCourseLevelChange(e.target.value)}>
-                <option>All Levels</option>
-                <option value="100">100 Level</option>
-                <option value="200">200 Level</option>
-                <option value="300">300 Level</option>
-                <option value="400">400 Level</option>
-              </select>
+              <div className="checkbox-group">
+                {[100, 200, 300, 400].map(level => (
+                  <div key={level} className="checkbox-item">
+                    <input
+                      type="checkbox"
+                      id={`level-${level}`}
+                      checked={courseLevels.includes(level.toString())}
+                      onChange={() => toggleCourseLevel(level.toString())}
+                    />
+                    <label htmlFor={`level-${level}`}>{level} Level</label>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="filter-group">
               <label>Credit Hours</label>
-              <select value={creditHours} onChange={(e) => handleCreditHoursChange(e.target.value)}>
-                <option>All Credits</option>
-                {[...new Set(coursesData.map((c) => c.credits))]
-                  .sort()
-                  .map((credit) => (
-                    <option key={credit} value={credit}>
-                      {credit} credit{credit !== 1 ? 's' : ''}
-                    </option>
-                  ))}
-              </select>
+              <div className="checkbox-group">
+                {uniqueCreditHours.map(credit => (
+                  <div key={credit} className="checkbox-item">
+                    <input
+                      type="checkbox"
+                      id={`credit-${credit}`}
+                      checked={creditHours.includes(credit.toString())}
+                      onChange={() => toggleCreditHour(credit.toString())}
+                    />
+                    <label htmlFor={`credit-${credit}`}>{credit} credit{credit !== 1 ? 's' : ''}</label>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="filter-group">
               <label>Semester</label>
-              <select value={semester} onChange={(e) => handleSemesterChange(e.target.value)}>
-                <option>All Semesters</option>
-                <option value="F">Fall</option>
-                <option value="W">Winter</option>
-                <option value="SP">Spring</option>
-                <option value="SU">Summer</option>
-              </select>
+              <div className="checkbox-group">
+                {['F', 'W', 'SP', 'SU'].map(sem => (
+                  <div key={sem} className="checkbox-item">
+                    <input
+                      type="checkbox"
+                      id={`semester-${sem}`}
+                      checked={semesters.includes(sem)}
+                      onChange={() => toggleSemester(sem)}
+                    />
+                    <label htmlFor={`semester-${sem}`}>
+                      {sem === 'F' ? 'Fall' : sem === 'W' ? 'Winter' : sem === 'SP' ? 'Spring' : 'Summer'}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="filter-group">
@@ -223,6 +282,55 @@ function App() {
         </aside>
 
         <main className="courses-container">
+          {/* Active Filter Pills */}
+          {(searchTerm || courseLevels.length > 0 || creditHours.length > 0 || semesters.length > 0 || showCore || showFavorites) && (
+            <div className="active-filters">
+              {searchTerm && (
+                <div className="filter-pill">
+                  <span>Search: {searchTerm}</span>
+                  <button onClick={() => removeFilterPill('search', searchTerm)}>×</button>
+                </div>
+              )}
+              
+              {courseLevels.map(level => (
+                <div className="filter-pill" key={`pill-level-${level}`}>
+                  <span>{level} Level</span>
+                  <button onClick={() => removeFilterPill('level', level)}>×</button>
+                </div>
+              ))}
+              
+              {creditHours.map(credit => (
+                <div className="filter-pill" key={`pill-credit-${credit}`}>
+                  <span>{credit} Credit{credit !== '1' ? 's' : ''}</span>
+                  <button onClick={() => removeFilterPill('credit', credit)}>×</button>
+                </div>
+              ))}
+              
+              {semesters.map(sem => (
+                <div className="filter-pill" key={`pill-semester-${sem}`}>
+                  <span>
+                    {sem === 'F' ? 'Fall' : sem === 'W' ? 'Winter' : sem === 'SP' ? 'Spring' : 'Summer'}
+                  </span>
+                  <button onClick={() => removeFilterPill('semester', sem)}>×</button>
+                </div>
+              ))}
+              
+              {showCore && (
+                <div className="filter-pill">
+                  <span>Core Classes</span>
+                  <button onClick={() => removeFilterPill('core')}>×</button>
+                </div>
+              )}
+              
+              {showFavorites && (
+                <div className="filter-pill">
+                  <span>Favorites</span>
+                  <button onClick={() => removeFilterPill('favorites')}>×</button>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="pagination-controls">
             <div className="courses-per-page">
               <label htmlFor="coursesPerPage">Show:</label>
