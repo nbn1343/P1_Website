@@ -8,7 +8,8 @@ function App() {
   const [courseLevel, setCourseLevel] = useState('All Levels');
   const [creditHours, setCreditHours] = useState('All Credits');
   const [semester, setSemester] = useState('All Semesters');
-  const coursesPerPage = 21;
+  const [coursesPerPage, setCoursesPerPage] = useState(21);
+  const [showAllCourses, setShowAllCourses] = useState(false);
 
   const [favorites, setFavorites] = useState([]);
 
@@ -27,6 +28,8 @@ function App() {
     setShowCore(false);
     setSortOrder('asc');
     setCurrentPage(1);
+    setCoursesPerPage(21);
+    setShowAllCourses(false);
   }
 
   const handleFilterReset = (setter, defaultValue) => {
@@ -65,14 +68,16 @@ function App() {
       }
     });
 
-  const totalPages = Math.ceil(filteredCourses.length / coursesPerPage);
+  const totalPages = showAllCourses ? 1 : Math.ceil(filteredCourses.length / coursesPerPage);
   const displayedCourses =
     showFavorites && favorites.length === 0
       ? []
-      : filteredCourses.slice(
-          (currentPage - 1) * coursesPerPage,
-          currentPage * coursesPerPage
-        );
+      : showAllCourses 
+        ? filteredCourses
+        : filteredCourses.slice(
+            (currentPage - 1) * coursesPerPage,
+            currentPage * coursesPerPage
+          );
 
   const toggleFavorite = (courseId) => {
     setFavorites((currentFavorites) => {
@@ -110,12 +115,23 @@ function App() {
   const handleFavoriteChange = (newShowFavorites) => {
     setShowFavorites(newShowFavorites);
     setCurrentPage(1); // Reset to the first page
-  }
+  };
 
   const handleCoreChange = (newShowCore) => { 
     setShowCore(newShowCore);
     setCurrentPage(1); // Reset to the first page
-  }
+  };
+
+  const handleCoursesPerPageChange = (event) => {
+    const value = event.target.value;
+    if (value === 'all') {
+      setShowAllCourses(true);
+    } else {
+      setShowAllCourses(false);
+      setCoursesPerPage(parseInt(value));
+    }
+    setCurrentPage(1); // Reset to the first page
+  };
 
   return (
     <div className="app-container">
@@ -236,23 +252,42 @@ function App() {
         </aside>
 
         <main className="courses-container">
-          <div className="pagination top-pagination">
-            <button
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <span>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
+          <div className="pagination-controls">
+            <div className="courses-per-page">
+              <label htmlFor="coursesPerPage">Show:</label>
+              <select 
+                id="coursesPerPage" 
+                value={showAllCourses ? 'all' : coursesPerPage} 
+                onChange={handleCoursesPerPageChange}
+              >
+                <option value="12">12</option>
+                <option value="24">24</option>
+                <option value="48">48</option>
+                <option value="all">All</option>
+              </select>
+            </div>
+            
+            {!showAllCourses && (
+              <div className="pagination top-pagination">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+                <span>
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </div>
+          
           <div className="courses-scroll">
             <div className="courses-grid">
               {showFavorites && favorites.length === 0 ? (
@@ -294,23 +329,26 @@ function App() {
               )}
             </div>
           </div>
-          <div className="pagination bottom-pagination">
-            <button
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <span>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>
+          
+          {!showAllCourses && (
+            <div className="pagination bottom-pagination">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <span>
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </main>
 
         <aside className="major-outline-sidebar">

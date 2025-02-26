@@ -157,6 +157,44 @@
   min-width: 986px;
 }
 
+/* Pagination Controls */
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.courses-per-page {
+  position: absolute;
+}
+
+.courses-per-page label {
+  color: #212529;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.courses-per-page select {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  color: #495057;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.courses-per-page select:hover {
+  border-color: #ced4da;
+}
+
+.courses-per-page select:focus {
+  border-color: #002E5D;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 46, 93, 0.2);
+}
+
 .courses-scroll {
   flex: 1;
   overflow-y: auto;
@@ -485,7 +523,8 @@
 }
 
 .top-pagination {
-  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .bottom-pagination {
@@ -647,5 +686,17 @@
   .modal-content {
     width: 95%;
     padding: 1.5rem;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+  
+  .top-pagination {
+    align-self: center;
   }
 }
