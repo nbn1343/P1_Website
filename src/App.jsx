@@ -29,6 +29,11 @@ function App() {
     setCurrentPage(1);
   }
 
+  const handleFilterReset = (setter, defaultValue) => {
+    setter(defaultValue);
+    setCurrentPage(1);
+  };
+
   const filteredCourses = coursesData
     .filter((course) => {
       const levelMatch =
@@ -154,15 +159,20 @@ function App() {
             </div>
 
             <div className="filter-group">
-              <label>Course Level</label>
-              <select value={courseLevel} onChange={(e) => handleCourseLevelChange(e.target.value)}>
-                <option>All Levels</option>
-                <option value="100">100 Level</option>
-                <option value="200">200 Level</option>
-                <option value="300">300 Level</option>
-                <option value="400">400 Level</option>
-              </select>
-            </div>
+            <label>Course Level</label>
+            <select value={courseLevel} onChange={(e) => handleCourseLevelChange(e.target.value)}>
+              <option>All Levels</option>
+              <option value="100">100 Level</option>
+              <option value="200">200 Level</option>
+              <option value="300">300 Level</option>
+              <option value="400">400 Level</option>
+            </select>
+            {courseLevel !== 'All Levels' && (
+              <button className="clear-button" onClick={() => handleFilterReset(setCourseLevel, 'All Levels')}>
+                ×
+              </button>
+            )}
+          </div>
 
             <div className="filter-group">
               <label>Credit Hours</label>
@@ -176,6 +186,11 @@ function App() {
                     </option>
                   ))}
               </select>
+              {creditHours !== 'All Credits' && (
+                  <button className="clear-button" onClick={() => handleFilterReset(setCreditHours, 'All Credits')}>
+                    ×
+                  </button>
+                )}
             </div>
 
             <div className="filter-group">
@@ -187,6 +202,11 @@ function App() {
                 <option value="SP">Spring</option>
                 <option value="SU">Summer</option>
               </select>
+              {semester !== 'All Semesters' && (
+                  <button className="clear-button" onClick={() => handleFilterReset(setSemester, 'All Semesters')}>
+                    ×
+                  </button>
+                )}
             </div>
 
             <div className="filter-group">
