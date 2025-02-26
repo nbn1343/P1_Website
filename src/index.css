@@ -12,6 +12,126 @@
   text-align: center;
 }
 
+/* Header with search bar */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.header-left {
+  text-align: left;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header .search-container {
+  position: relative;
+  width: 300px;
+  margin-left: 1rem;
+}
+
+.header .search-container input {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border-radius: 8px;
+  width: 100%;
+  transition: background 0.2s, border-color 0.2s;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'><path d='M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 14a6 6 0 1 1 0-12 6 6 0 0 1 0 12z'/><path d='M21.707 20.293l-4.825-4.825A7.952 7.952 0 0 0 18 10a8 8 0 1 0-8 8 7.95 7.95 0 0 0 4.875-1.687l4.825 4.825a1 1 0 0 0 1.414-1.414z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: left 0.75rem center;
+  background-size: 16px;
+}
+
+.header .search-container input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.header .search-container input:focus {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
+.header .clear-button {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: background 0.2s;
+}
+
+.header .clear-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Updated pagination controls with sort */
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+  padding: 0 0.5rem;
+}
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto; /* Push to the right */
+}
+
+.sort-control label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #212529;
+}
+
+.sort-control select {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  color: #495057;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.sort-control select:hover {
+  border-color: #ced4da;
+}
+
+.sort-control select:focus {
+  border-color: #002E5D;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 46, 93, 0.2);
+}
+
+/* Make pagination centered */
+.top-pagination {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .header h1 {
   margin: 0;
   font-size: 2.5rem;
@@ -188,6 +308,7 @@
 
 .courses-per-page {
   position: absolute;
+  align-self: right;
 }
 
 .courses-per-page label {
@@ -711,10 +832,11 @@
   
   .pagination-controls {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
-    gap: 1rem;
+    position: relative;
+    padding: 0 0.5rem;
   }
   
   .top-pagination {

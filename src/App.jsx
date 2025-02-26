@@ -32,11 +32,6 @@ function App() {
     setShowAllCourses(false);
   }
 
-  const handleFilterReset = (setter, defaultValue) => {
-    setter(defaultValue);
-    setCurrentPage(1);
-  };
-
   const filteredCourses = coursesData
     .filter((course) => {
       const levelMatch =
@@ -136,59 +131,45 @@ function App() {
   return (
     <div className="app-container">
       <header className="header">
-        <h1>BYU CS Courses</h1>
-        <p className="subtitle">Explore undergraduate Computer Science courses</p>
-        <p className="results-count">
-          Showing {displayedCourses.length} of {filteredCourses.length} courses
-        </p>
+        <div className="header-content">
+          <div className="header-left">
+            <h1>BYU CS Courses</h1>
+            <p className="subtitle">Explore undergraduate Computer Science courses</p>
+            <p className="results-count">
+              Showing {displayedCourses.length} of {filteredCourses.length} courses
+            </p>
+          </div>
+          <div className="header-right">
+            <div className="search-container">
+              <input
+                type="text"
+                placeholder="Search courses..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <button className="clear-button" onClick={() => setSearchTerm('')}>
+                  ×
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
       </header>
 
       <div className="three-column-layout">
         <aside className="filters-sidebar">
           <div className="filters">
             <div className="filter-group">
-              <label>Search</label>
-              <div className="search-container">
-                <input
-                  type="text"
-                  placeholder="Search courses..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                {searchTerm && (
-                  <button className="clear-button" onClick={() => setSearchTerm('')}>
-                    ×
-                  </button>
-                )}
-              </div>
-            </div>
-
-            <div className="filter-group">
-              <label>Sort Courses</label>
-              <select
-                value={sortOrder}
-                onChange={(e) => handleSortOrderChange(e.target.value)}
-              >
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
+              <label>Course Level</label>
+              <select value={courseLevel} onChange={(e) => handleCourseLevelChange(e.target.value)}>
+                <option>All Levels</option>
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400">400 Level</option>
               </select>
             </div>
-
-            <div className="filter-group">
-            <label>Course Level</label>
-            <select value={courseLevel} onChange={(e) => handleCourseLevelChange(e.target.value)}>
-              <option>All Levels</option>
-              <option value="100">100 Level</option>
-              <option value="200">200 Level</option>
-              <option value="300">300 Level</option>
-              <option value="400">400 Level</option>
-            </select>
-            {courseLevel !== 'All Levels' && (
-              <button className="clear-button" onClick={() => handleFilterReset(setCourseLevel, 'All Levels')}>
-                ×
-              </button>
-            )}
-          </div>
 
             <div className="filter-group">
               <label>Credit Hours</label>
@@ -202,11 +183,6 @@ function App() {
                     </option>
                   ))}
               </select>
-              {creditHours !== 'All Credits' && (
-                  <button className="clear-button" onClick={() => handleFilterReset(setCreditHours, 'All Credits')}>
-                    ×
-                  </button>
-                )}
             </div>
 
             <div className="filter-group">
@@ -218,11 +194,6 @@ function App() {
                 <option value="SP">Spring</option>
                 <option value="SU">Summer</option>
               </select>
-              {semester !== 'All Semesters' && (
-                  <button className="clear-button" onClick={() => handleFilterReset(setSemester, 'All Semesters')}>
-                    ×
-                  </button>
-                )}
             </div>
 
             <div className="filter-group">
@@ -286,6 +257,18 @@ function App() {
                 </button>
               </div>
             )}
+            
+            <div className="sort-control">
+              <label htmlFor="sortOrder">Sort:</label>
+              <select
+                id="sortOrder"
+                value={sortOrder}
+                onChange={(e) => handleSortOrderChange(e.target.value)}
+              >
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </select>
+            </div>
           </div>
           
           <div className="courses-scroll">
