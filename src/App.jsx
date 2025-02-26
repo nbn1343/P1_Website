@@ -443,6 +443,9 @@ function App() {
                   <strong>Credits:</strong> {modalCourse.credits}
                 </p>
                 <p>
+                  <strong>Instructors:</strong> {modalCourse.instructors.join(', ')}
+                </p>
+                <p>
                   <strong>Semesters Offered:</strong>
                 </p>
                 <div className="modal-semesters">
@@ -458,6 +461,7 @@ function App() {
                     </span>
                   ))}
                 </div>
+
               </div>
             </div>
           </div>
