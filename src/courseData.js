@@ -82,7 +82,7 @@ const coursesData = [
   {
     "id": "cs312",
     "header": "CS 312",
-    "title": "Algorithm Design and Analysis",
+    "title": "Algorithm Design & Analysis",
     "description": "Advanced algorithm analysis, design techniques, graph algorithms, probabilistic algorithms, and parallel computing.",
     "credits": 3,
     "semesters": ["F", "W"],

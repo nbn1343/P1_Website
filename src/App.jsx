@@ -18,6 +18,12 @@ function App() {
   const [sortOrder, setSortOrder] = useState('asc'); // 'asc' or 'desc'
 
   const [showFavorites, setShowFavorites] = useState(false);
+  
+  // State to track which dropdowns are open
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  // State to track selected course from major outline
+  const [selectedOutlineCourse, setSelectedOutlineCourse] = useState(null);
 
   const resetFilters = () => {
     setSearchTerm('');
@@ -30,6 +36,7 @@ function App() {
     setCurrentPage(1);
     setCoursesPerPage(21);
     setShowAllCourses(false);
+    setSelectedOutlineCourse(null);
   }
 
   const toggleCourseLevel = (level) => {
@@ -78,8 +85,35 @@ function App() {
       setShowFavorites(false);
     } else if (type === 'search') {
       setSearchTerm('');
+    } else if (type === 'selected') {
+      setSelectedOutlineCourse(null);
     }
     setCurrentPage(1);
+  };
+
+  // Function to toggle dropdown state
+  const toggleDropdown = (dropdown) => {
+    if (openDropdown === dropdown) {
+      setOpenDropdown(null);
+    } else {
+      setOpenDropdown(dropdown);
+    }
+  };
+
+  // Function to select a course from the major outline
+  const selectCourseFromOutline = (courseId) => {
+    const course = coursesData.find(c => c.id === courseId);
+    if (course) {
+      setSelectedOutlineCourse(course.id);
+      // Reset page to ensure the selected course is visible
+      setCurrentPage(1);
+      
+      // Scroll to the top of the courses container
+      const coursesContainer = document.querySelector('.courses-scroll');
+      if (coursesContainer) {
+        coursesContainer.scrollTop = 0;
+      }
+    }
   };
 
   const filteredCourses = coursesData
@@ -101,12 +135,21 @@ function App() {
       
       const favoritesMatch = !showFavorites || favorites.includes(course.id);
       const coreMatch = !showCore || course.isCore;
+      
+      // Check if this is the selected course from the outline
+      const selectedMatch = !selectedOutlineCourse || course.id === selectedOutlineCourse;
 
       return (
-        levelMatch && creditMatch && semesterMatch && searchMatch && favoritesMatch && coreMatch
+        levelMatch && creditMatch && semesterMatch && searchMatch && favoritesMatch && coreMatch && selectedMatch
       );
     })
     .sort((a, b) => {
+      // If there is a selected course, it should appear first
+      if (selectedOutlineCourse) {
+        if (a.id === selectedOutlineCourse) return -1;
+        if (b.id === selectedOutlineCourse) return 1;
+      }
+
       const levelA = parseInt(a.header.match(/\d+/)[0]);
       const levelB = parseInt(b.header.match(/\d+/)[0]);
 
@@ -170,6 +213,20 @@ function App() {
   // Get all unique credit hours for multi-select
   const uniqueCreditHours = [...new Set(coursesData.map(c => c.credits))].sort();
 
+  // Close dropdown when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (openDropdown && !event.target.closest('.filter-dropdown-container')) {
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [openDropdown]);
+
   return (
     <div className="app-container">
       <header className="header">
@@ -201,12 +258,19 @@ function App() {
 
       <div className="three-column-layout">
         <aside className="filters-sidebar">
-          <div className="filters">
-            <div className="filter-group">
-              <label>Course Level</label>
-              <div className="checkbox-group">
+          <div className="filters accordion-filters">
+            {/* Course Level Dropdown */}
+            <div className="accordion-item filter-dropdown-container">
+              <button 
+                className="accordion-header filter-dropdown-button" 
+                onClick={() => toggleDropdown('level')}
+              >
+                Course Level
+                <span className="dropdown-arrow">{openDropdown === 'level' ? '▲' : '▼'}</span>
+              </button>
+              <div className={`accordion-content ${openDropdown === 'level' ? 'expanded' : ''}`}>
                 {[100, 200, 300, 400].map(level => (
-                  <div key={level} className="checkbox-item">
+                  <div key={level} className="dropdown-checkbox-item">
                     <input
                       type="checkbox"
                       id={`level-${level}`}
@@ -217,13 +281,23 @@ function App() {
                   </div>
                 ))}
               </div>
+              {courseLevels.length > 0 && (
+                <div className="selected-count">{courseLevels.length} selected</div>
+              )}
             </div>
 
-            <div className="filter-group">
-              <label>Credit Hours</label>
-              <div className="checkbox-group">
+            {/* Credit Hours Dropdown */}
+            <div className="accordion-item filter-dropdown-container">
+              <button 
+                className="accordion-header filter-dropdown-button" 
+                onClick={() => toggleDropdown('credits')}
+              >
+                Credit Hours
+                <span className="dropdown-arrow">{openDropdown === 'credits' ? '▲' : '▼'}</span>
+              </button>
+              <div className={`accordion-content ${openDropdown === 'credits' ? 'expanded' : ''}`}>
                 {uniqueCreditHours.map(credit => (
-                  <div key={credit} className="checkbox-item">
+                  <div key={credit} className="dropdown-checkbox-item">
                     <input
                       type="checkbox"
                       id={`credit-${credit}`}
@@ -234,13 +308,23 @@ function App() {
                   </div>
                 ))}
               </div>
+              {creditHours.length > 0 && (
+                <div className="selected-count">{creditHours.length} selected</div>
+              )}
             </div>
 
-            <div className="filter-group">
-              <label>Semester</label>
-              <div className="checkbox-group">
+            {/* Semester Dropdown */}
+            <div className="accordion-item filter-dropdown-container">
+              <button 
+                className="accordion-header filter-dropdown-button" 
+                onClick={() => toggleDropdown('semester')}
+              >
+                Semester
+                <span className="dropdown-arrow">{openDropdown === 'semester' ? '▲' : '▼'}</span>
+              </button>
+              <div className={`accordion-content ${openDropdown === 'semester' ? 'expanded' : ''}`}>
                 {['F', 'W', 'SP', 'SU'].map(sem => (
-                  <div key={sem} className="checkbox-item">
+                  <div key={sem} className="dropdown-checkbox-item">
                     <input
                       type="checkbox"
                       id={`semester-${sem}`}
@@ -253,24 +337,45 @@ function App() {
                   </div>
                 ))}
               </div>
+              {semesters.length > 0 && (
+                <div className="selected-count">{semesters.length} selected</div>
+              )}
             </div>
 
-            <div className="filter-group">
-              <label>Show Favorites</label>
-              <input
-                type="checkbox"
-                checked={showFavorites}
-                onChange={() => handleFavoriteChange(!showFavorites)}
-              />
-            </div>
-
-            <div className="filter-group">
-              <label>Show Core Classes</label>
-              <input
-                type="checkbox"
-                checked={showCore}
-                onChange={() => handleCoreChange(!showCore)}
-              />
+            {/* Additional Options Dropdown */}
+            <div className="accordion-item filter-dropdown-container">
+              <button 
+                className="accordion-header filter-dropdown-button" 
+                onClick={() => toggleDropdown('options')}
+              >
+                Additional Options
+                <span className="dropdown-arrow">{openDropdown === 'options' ? '▲' : '▼'}</span>
+              </button>
+              <div className={`accordion-content ${openDropdown === 'options' ? 'expanded' : ''}`}>
+                <div className="dropdown-checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="show-favorites"
+                    checked={showFavorites}
+                    onChange={() => handleFavoriteChange(!showFavorites)}
+                  />
+                  <label htmlFor="show-favorites">Show Favorites</label>
+                </div>
+                <div className="dropdown-checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="show-core"
+                    checked={showCore}
+                    onChange={() => handleCoreChange(!showCore)}
+                  />
+                  <label htmlFor="show-core">Show Core Classes</label>
+                </div>
+              </div>
+              {(showFavorites || showCore) && (
+                <div className="selected-count">
+                  {(showFavorites && showCore) ? '2 selected' : '1 selected'}
+                </div>
+              )}
             </div>
 
             <div className="filter-group">
@@ -283,7 +388,7 @@ function App() {
 
         <main className="courses-container">
           {/* Active Filter Pills */}
-          {(searchTerm || courseLevels.length > 0 || creditHours.length > 0 || semesters.length > 0 || showCore || showFavorites) && (
+          {(searchTerm || courseLevels.length > 0 || creditHours.length > 0 || semesters.length > 0 || showCore || showFavorites || selectedOutlineCourse) && (
             <div className="active-filters">
               {searchTerm && (
                 <div className="filter-pill">
@@ -326,6 +431,13 @@ function App() {
                 <div className="filter-pill">
                   <span>Favorites</span>
                   <button onClick={() => removeFilterPill('favorites')}>×</button>
+                </div>
+              )}
+
+              {selectedOutlineCourse && (
+                <div className="filter-pill selected-course-pill">
+                  <span>Selected: {coursesData.find(c => c.id === selectedOutlineCourse)?.header}</span>
+                  <button onClick={() => removeFilterPill('selected')}>×</button>
                 </div>
               )}
             </div>
@@ -385,7 +497,10 @@ function App() {
                 <div className="no-favorites-message">NO FAVORITES SELECTED</div>
               ) : (
                 displayedCourses.map((course) => (
-                  <div className="course-card" key={course.id}>
+                  <div 
+                    className={`course-card ${course.id === selectedOutlineCourse ? 'highlighted-course' : ''}`} 
+                    key={course.id}
+                  >
                     <div className="card-header">
                       <h2>
                         {course.header}
@@ -450,10 +565,13 @@ function App() {
               <h3>Core Requirements</h3>
               <ul className="requirement-list">
                 {coursesData.filter(course => course.isCore).map(course => (
-                  <li key={course.id} className={favorites.includes(course.id) ? 'favorited-course' : ''}>
+                  <li 
+                    key={course.id} 
+                    className={`${favorites.includes(course.id) ? 'favorited-course' : ''} ${course.id === selectedOutlineCourse ? 'selected-outline-course' : ''}`}
+                    onClick={() => selectCourseFromOutline(course.id)}
+                  >
                     <span className="course-code">{course.header}</span>
                     <span className="course-title">{course.title}</span>
-                    <span className="course-credits">({course.credits} cr)</span>
                   </li>
                 ))}
               </ul>

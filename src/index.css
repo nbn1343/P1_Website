@@ -34,6 +34,7 @@
   position: relative;
   width: 300px;
   margin-left: 1rem;
+  padding-right: 1rem;
 }
 
 .header .search-container input {
@@ -217,10 +218,7 @@
 
 /* Checkbox Group Styles */
 .checkbox-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
+  display: none;
 }
 
 .checkbox-item {
@@ -308,7 +306,7 @@
 }
 
 .filter-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .filter-group label {
@@ -352,6 +350,65 @@
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
+}
+
+.accordion-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.accordion-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.accordion-header {
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  font-weight: 500;
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease;
+  padding: 0 16px;
+}
+
+.accordion-content.expanded {
+  max-height: 200px; /* Adjust based on your content */
+  padding: 8px 16px 16px;
+  overflow-y: auto;
+}
+
+/* Style the checkbox items inside */
+.dropdown-checkbox-item {
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Position the selected count at the bottom of the accordion item */
+.selected-count {
+  font-size: 0.8rem;
+  color: #666;
+  padding: 4px 16px 8px;
+  text-align: right;
+}
+
+/* Make sure arrows transition smoothly */
+.dropdown-arrow {
+  transition: transform 0.3s ease;
 }
 
 .search-container {
@@ -477,6 +534,7 @@
   overflow-y: auto;
   height: 800px; /* Fixed height instead of min/max height */
   padding-right: 0.5rem;
+  padding-left: 1rem;
 }
 
 .courses-grid {
@@ -679,6 +737,7 @@
   text-overflow: ellipsis;
   color: #6c757d;
   padding: 0 0.5rem;
+  font-size: 0.83rem;
 }
 
 .course-credits {
@@ -973,4 +1032,53 @@
   .top-pagination {
     align-self: center;
   }
+}
+
+.major-outline-sidebar {
+  overflow-y: auto;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.major-outline {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 5px; /* Add some padding for the scrollbar */
+}
+
+/* Make courses in the requirement list clickable */
+.requirement-list li {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.requirement-list li:hover {
+  background-color: rgba(0, 0, 255, 0.05);
+}
+
+/* Style for selected course in the outline */
+.selected-outline-course {
+  background-color: rgba(0, 0, 255, 0.1);
+  border-left: 3px solid #0066cc;
+}
+
+/* Style for highlighted course in the course grid */
+.highlighted-course {
+  border: 2px solid #0066cc;
+  box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
+}
+
+/* Style for selected course filter pill */
+.selected-course-pill {
+  background-color: #0066cc;
+  color: white;
+}
+
+
+/* Make sure we have proper cursors for interactive elements */
+.course-card, .requirement-list li, .filter-pill button {
+  cursor: pointer;
 }
