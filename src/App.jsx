@@ -15,8 +15,6 @@ function App() {
   // Flattening the array of instructors and creating a unique set, then converting it back to a sorted array
   const uniqueInstructors = Array.from(new Set(coursesData.flatMap(course => course.instructors))).sort();
 
-
-
   const [favorites, setFavorites] = useState([]);
 
   const [showCore, setShowCore] = useState(false);
@@ -731,7 +729,7 @@ function App() {
       )}
       <footer className="footer">
         <p>&copy; 2025 BYU CS Courses. All rights reserved.</p>
-        <p>Contact: webmaster@byu.edu | Address: Provo, UT 84602</p>
+        <p>Contact: <a href="mailto:webmaster@byu.edu">webmaster@byu.edu</a> | Address: Provo, UT 84602, USA</p>
       </footer>
     </div>
   );
