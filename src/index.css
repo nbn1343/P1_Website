@@ -1092,3 +1092,25 @@
 .course-card, .requirement-list li, .filter-pill button {
   cursor: pointer;
 }
+
+/* scroll button */
+.scroll-to-top {
+  background-color: #fff;
+  color: #002E5D;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  border: none;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.scroll-to-top:hover {
+  color: #004080;
+}
+
+.scroll-to-top svg {
+  width: 36px;
+  height: 36px;
+  display: block;
+}
