@@ -157,7 +157,7 @@ const coursesData = [
     "credits": 3,
     "semesters": ["F", "W"],
     "isCore": false,
-    "instructors": ["Stevens", "Wilkerson"]
+    "instructors": ["Stevens", "Wilkerson", "Fulda"]
   },
   {
     "id": "cs470",
@@ -327,7 +327,7 @@ const coursesData = [
     "credits": 3,
     "semesters": ["F", "W"],
     "isCore": false,
-    "instructors": ["Wilkerson", "Reynolds"]
+    "instructors": ["Wilkerson", "Reynolds", "Fulda"]
   },
   {
     "id": "cs412",
@@ -457,7 +457,7 @@ const coursesData = [
     "credits": 3,
     "semesters": ["F"],
     "isCore": false,
-    "instructors": ["Jensen", "Stevens"]
+    "instructors": ["Jensen", "Stevens", "Fulda"]
   }
 ]
 

@@ -384,6 +384,9 @@ function App() {
                   </div>
                 ))}
               </div>
+              {selectedInstructors.length > 0 && (
+                <div className="selected-count">{selectedInstructors.length} selected</div>
+              )}
             </div>
             {/* Additional Options Dropdown */}
             <div className="accordion-item filter-dropdown-container">
