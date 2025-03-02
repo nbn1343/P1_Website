@@ -10,6 +10,12 @@ function App() {
   const [semesters, setSemesters] = useState([]);
   const [coursesPerPage, setCoursesPerPage] = useState(21);
   const [showAllCourses, setShowAllCourses] = useState(false);
+  const [selectedInstructors, setSelectedInstructors] = useState([]);
+
+  // Flattening the array of instructors and creating a unique set, then converting it back to a sorted array
+  const uniqueInstructors = Array.from(new Set(coursesData.flatMap(course => course.instructors))).sort();
+
+
 
   const [favorites, setFavorites] = useState([]);
 
@@ -37,6 +43,7 @@ function App() {
     setCoursesPerPage(21);
     setShowAllCourses(false);
     setSelectedOutlineCourse(null);
+    setSelectedInstructors([]);
   }
 
   const toggleCourseLevel = (level) => {
@@ -51,15 +58,13 @@ function App() {
   }
 
   const toggleCreditHour = (credit) => {
-    setCreditHours(prev => {
-      if (prev.includes(credit)) {
-        return prev.filter(c => c !== credit);
-      } else {
-        return [...prev, credit];
-      }
-    });
+    setCreditHours((prevCredits) =>
+      prevCredits.includes(credit)
+        ? prevCredits.filter((c) => c !== credit)
+        : [...prevCredits, credit]
+    );
     setCurrentPage(1);
-  }
+  };
 
   const toggleSemester = (sem) => {
     setSemesters(prev => {
@@ -83,7 +88,9 @@ function App() {
       setShowCore(false);
     } else if (type === 'favorites') {
       setShowFavorites(false);
-    } else if (type === 'search') {
+    }  else if (type === 'instructor') {
+      setSelectedInstructors(prev => prev.filter(instructor => instructor !== value));
+    }  else if (type === 'search') {
       setSearchTerm('');
     } else if (type === 'selected') {
       setSelectedOutlineCourse(null);
@@ -128,6 +135,8 @@ function App() {
       
       const semesterMatch = semesters.length === 0 || 
         semesters.some(sem => course.semesters.includes(sem));
+
+      const instructorMatch = selectedInstructors.length === 0 || course.instructors.some(instructor => selectedInstructors.includes(instructor));
       
       const searchMatch =
         course.header.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -140,7 +149,7 @@ function App() {
       const selectedMatch = !selectedOutlineCourse || course.id === selectedOutlineCourse;
 
       return (
-        levelMatch && creditMatch && semesterMatch && searchMatch && favoritesMatch && coreMatch && selectedMatch
+        levelMatch && creditMatch && semesterMatch && instructorMatch && searchMatch && favoritesMatch && coreMatch && selectedMatch
       );
     })
     .sort((a, b) => {
@@ -197,6 +206,17 @@ function App() {
   const handleCoreChange = (newShowCore) => { 
     setShowCore(newShowCore);
     setCurrentPage(1); // Reset to the first page
+  };
+
+  const toggleInstructorSelection = (instructor) => {
+    setSelectedInstructors(prev => {
+      if (prev.includes(instructor)) {
+        return prev.filter(i => i !== instructor);
+      } else {
+        return [...prev, instructor];
+      }
+    });
+    setCurrentPage(1); // Reset to first page on filter change
   };
 
   const handleCoursesPerPageChange = (event) => {
@@ -342,6 +362,29 @@ function App() {
               )}
             </div>
 
+            {/* Instructor Dropdown */}
+            <div className="accordion-item filter-dropdown-container">
+              <button 
+                className="accordion-header filter-dropdown-button" 
+                onClick={() => toggleDropdown('instructor')}
+              >
+                Instructors
+                <span className="dropdown-arrow">{openDropdown === 'instructor' ? '▲' : '▼'}</span>
+              </button>
+              <div className={`accordion-content ${openDropdown === 'instructor' ? 'expanded' : ''}`}>
+                {uniqueInstructors.map(instructor => (
+                  <div key={instructor} className="dropdown-checkbox-item">
+                    <input
+                      type="checkbox"
+                      id={`instructor-${instructor}`}
+                      checked={selectedInstructors.includes(instructor)}
+                      onChange={() => toggleInstructorSelection(instructor)}
+                    />
+                    <label htmlFor={`instructor-${instructor}`}>{instructor}</label>
+                  </div>
+                ))}
+              </div>
+            </div>
             {/* Additional Options Dropdown */}
             <div className="accordion-item filter-dropdown-container">
               <button 
@@ -388,7 +431,7 @@ function App() {
 
         <main className="courses-container">
           {/* Active Filter Pills */}
-          {(searchTerm || courseLevels.length > 0 || creditHours.length > 0 || semesters.length > 0 || showCore || showFavorites || selectedOutlineCourse) && (
+          {(searchTerm || courseLevels.length > 0 || creditHours.length > 0 || semesters.length > 0 || showCore || showFavorites || selectedOutlineCourse || selectedInstructors.length > 0) && (
             <div className="active-filters">
               {searchTerm && (
                 <div className="filter-pill">
@@ -440,6 +483,13 @@ function App() {
                   <button onClick={() => removeFilterPill('selected')}>×</button>
                 </div>
               )}
+
+              {selectedInstructors.map(instructor => (
+                      <div className="filter-pill" key={`pill-instructor-${instructor}`}>
+                        <span>{instructor}</span>
+                        <button onClick={() => removeFilterPill('instructor', instructor)}>×</button>
+                      </div>
+                    ))}
             </div>
           )}
 
