@@ -12,7 +12,6 @@
   text-align: center;
 }
 
-
 /* Header with search bar */
 .header-content {
   display: flex;
@@ -46,10 +45,6 @@
   border-radius: 8px;
   width: 100%;
   transition: background 0.2s, border-color 0.2s;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'><path d='M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 14a6 6 0 1 1 0-12 6 6 0 0 1 0 12z'/><path d='M21.707 20.293l-4.825-4.825A7.952 7.952 0 0 0 18 10a8 8 0 1 0-8 8 7.95 7.95 0 0 0 4.875-1.687l4.825 4.825a1 1 0 0 0 1.414-1.414z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: left 0.75rem center;
-  background-size: 16px;
 }
 
 .header .search-container input::placeholder {
