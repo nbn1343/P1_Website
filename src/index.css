@@ -983,6 +983,11 @@
     margin-right: 20px;
     margin-bottom: 2rem;
   }
+
+  .header .clear-button {
+    right: 1rem;
+    top: 50%;
+  }
 }
 
 @media (max-width: 1440px) {
