@@ -673,8 +673,6 @@
 /* Right Sidebar - Major Outline */
 .major-outline-sidebar {
   grid-column: 3;
-  /* width: 340px;
-  padding-right: 150px; */
 }
 
 .major-outline {
@@ -980,9 +978,14 @@
     width: 300px;
     padding-right: 4rem;
   }
+
+  .major-outline {
+    margin-right: 20px;
+    margin-bottom: 2rem;
+  }
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1440px) {
   .header .search-container {
     position: relative;
     width: 300px;
@@ -1027,7 +1030,6 @@
 }
 
 @media (max-width: 768px) {
-
   .three-column-layout {
     grid-template-columns: 1fr;
     padding: 1rem;
@@ -1044,7 +1046,7 @@
   }
   
   .courses-container {
-    min-height: 600px; 
+    min-height: 600px;
   }
   
   .courses-scroll {
@@ -1080,7 +1082,6 @@
 .major-outline {
   flex: 1;
   overflow-y: auto;
-  /* padding-right: 5px; Add some padding for the scrollbar */
 }
 
 /* Make courses in the requirement list clickable */
