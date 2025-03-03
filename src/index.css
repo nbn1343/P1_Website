@@ -963,14 +963,14 @@
 
 /* Responsive Adjustments */
 @media (max-width: 1980px) {
-  /* .header-content {
-
-  } */
-
   .three-column-layout {
     grid-template-columns: 240px 1fr 350px;
     padding: 1.5rem;
     gap: 1.5rem;
+  }
+
+  .header .clear-button {
+    right: -1.75rem;
   }
 }
 
@@ -978,7 +978,7 @@
   .header .search-container {
     position: relative;
     width: 300px;
-    padding-right: 6rem;
+    padding-right: 4rem;
   }
 }
 
@@ -986,7 +986,7 @@
   .header .search-container {
     position: relative;
     width: 300px;
-    padding-right: 4rem;
+    padding-right: 3rem;
   }
 
   .three-column-layout {
