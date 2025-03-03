@@ -6,11 +6,12 @@
 }
 
 .header {
-  background-color: #002E5D;
+  background: linear-gradient(to right, #15558e, #00254a);
   color: white;
   padding: 2rem;
   text-align: center;
 }
+
 
 /* Header with search bar */
 .header-content {
